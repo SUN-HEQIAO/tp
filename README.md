@@ -6,7 +6,7 @@
 
 **GymContactsPro** is a desktop application designed for gym managers who need an efficient way to organize and manage gym members.
 
-It is optimized for use via a **Command Line Interface (CLI)** while still providing a clean and structured display using **JavaFX**. 
+It is optimized for use via a **Command Line Interface (CLI)** while still providing a clean and structured display using **JavaFX**.
 
 This makes it ideal for users who can type quickly and prefer keyboard-based interaction over mouse-heavy workflows.
 
@@ -23,7 +23,7 @@ Our users are comfortable with CLI commands and value speed and efficiency in th
 
 ## Value Proposition
 
-Managing gym memberships manually or using generic tools can be slow and error-prone. 
+Managing gym memberships manually or using generic tools can be slow and error-prone.
 
 GymContactsPro provides:
 
@@ -42,5 +42,5 @@ For detailed documentation and to view the GymContactsPro Product Website:
 
 ## Acknowledgements
 
-This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).  
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org). 
 If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
