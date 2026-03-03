@@ -27,7 +27,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/jlm012)]
 [[portfolio](team/jasher.md)]
 
-* Role: Developer
+* Role: Team Lead
+* Responsibilities: UI
 
 ### Johnny Doe
 
