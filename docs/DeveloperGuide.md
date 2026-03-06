@@ -287,14 +287,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​     | I want to …​                                                  | So that I can…​                                                            |
+|----------|-------------|---------------------------------------------------------------|----------------------------------------------------------------------------|
+| `* * *`  | Gym manager | I want to add new members                                     | So that I can keep a record of new members                                 |
+| `* * *`  | Gym manager | I want to view the list of members                            | So that I understand who is currently recorded                             |
+| `* * *`  | Gym manager | I want to delete a member                                     | So that I can remove incorrect or obsolete records                         |
+| `* * `   | Gym manager | I want to know how to interact with the app                   | So that I can begin to use the app                                         |
+| `* *`    | Gym manager | I want to search for a member                                 | So that I can retrieve their information                                   |
+| `* *`    | Gym manager | I want to edit member's personal information                  | So that my records can stay updated with the latest information            |
+| `* *`    | Gym manager | I want to know which member's membership is close to expiring | So that I can contact member's to remind them of their memberhsip validity |
+| `*`      | Gym manager | I want to check for a member's membership validity            | So that I can allow valid entry to gyms                                    |
+| `*`      | Gym manager | I want to sort member's membership validity                   | So that I can view members in order of membership expiry date              |
 
 *{More to be added}*
 
