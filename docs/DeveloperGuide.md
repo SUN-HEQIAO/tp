@@ -373,26 +373,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC05 : Find a gym member**
+**Use case: UC05 : Find a gym member by name**
 
 **MSS**
 
-1. Gym Manager requests to find a member by providing a specific name
-2. GymContactsPro displays a list of members matching that name
+1. Gym Manager requests to find a member by specifying search attribute and the search term (eg. -n Jacob, -id 4008A4))
+2. GymContactsPro displays a list of members matching the specifies criteria
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The Gym Manager does not provide a name to search for.
+* 1a. The Gym Manager does not provide a valid search criteria to search for.
 
     * 1a1. GymContactsPro shows an error message prompting for a name.
 
   Use case resumes at step 1.
 
-* 2a. There are no members matching the provided name.
+* 2a. There are no members matching the provided criteria.
 
     Use case ends.
+
 
 **Use case: UC06 : Edit existing member details**
 
