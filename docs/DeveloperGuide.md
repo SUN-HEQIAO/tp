@@ -320,7 +320,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The provided details are in an invalid format.
   * 1a1. GymContactsPro shows an error message indicating the required format.
 
-  Use case resumes at step 1.
+  Use case ends.
 
 * 1b. The provided details correspond to an already existing member in the system.
   * 1b1. GymContactsPro rejects the addition and shows a duplicate error message.
@@ -339,7 +339,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. There are no members recorded in the system.
-    * 2a1. GymContactsPro shows an error message.
+  * 2a1. GymContactsPro shows an error message.
 
     Use case ends.
 
@@ -358,7 +358,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. No membership is provided or format is invalid.
   * 1a1. GymContactsPro shows an error message prompting for the correct format.
   
-  Use case resumes at step 1.
+  Use case ends.
 
 * 1b. No member with given membership ID exists in the system.
   * 1b1. GymContactsPro shows an error message.
@@ -386,10 +386,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The Gym Manager does not provide a valid search format.
+  * 1a1. GymContactsPro shows an error message.
 
-    * 1a1. GymContactsPro shows an error message.
-
-  Use case resumes at step 1.
+    Use case ends.
 
 * 2a. There are no members matching the provided criteria.
     * 2a1. GymContactsPro shows an error message.
@@ -410,21 +409,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. No membership ID is provided or the format is invalid.
-    * 1a1. GymContactsPro shows an error message prompting for the correct format.
+  * 1a1. GymContactsPro shows an error message prompting for the correct format.
 
-  Use case ends.
+    Use case ends.
 
 * 3b. The provided new details are in an invalid format.
+  * 3b1. GymContactsPro shows an error message corresponding to the invalid field.
 
-    * 3b1. GymContactsPro shows an error message corresponding to the invalid field.
-
-  Use case ends.
+    Use case ends.
 
 * 3c. The new details create a duplicate member.
+  * 3c1. GymContactsPro rejects the edit and shows a duplicate fields error message.
 
-    * 3c1. GymContactsPro rejects the edit and shows a duplicate fields error message.
-
-  Use case ends.
+    Use case ends.
 
 **Use case: UC07 : Check memberships nearing expiry**
 
@@ -438,10 +435,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The Gym Manager provides an invalid number of days.
+  * 1a1. GymContactsPro shows an error message prompting for a valid number.
 
-    * 1a1. GymContactsPro shows an error message prompting for a valid number.
-
-  Use case resumes at step 1.
+    Use case ends.
 
 * 2a. No members have memberships expiring within the specified timeframe.
     * 2a1. GymContactsPro shows an error message.
@@ -461,13 +457,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. No membership ID is provided.
+  * 1a1. GymContactsPro shows an error message prompting for the correct format.
 
-    * 1a1. GymContactsPro shows an error message prompting for the correct format.
-
-  Use case ends.
+    Use case ends.
 
 * 2a. No member with the given membership ID exists in the system.
-    * 2a1. GymContactsPro shows an error message.
+  * 2a1. GymContactsPro shows an error message.
 
     Use case ends.
 
@@ -483,15 +478,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. The Gym Manager specifies an invalid sort order.
+  * 1a1. GymContactsPro shows an error message specifying the correct sort options.
 
-    * 1a1. GymContactsPro shows an error message specifying the correct sort options.
-
-  Use case ends.
+    Use case ends.
 
 * 2a. There are no members available to sort.
     * 2a1. GymContactsPro shows an error message specifying the correct sort options.
 
   Use case ends.
+
 
 ### Non-Functional Requirements
 
@@ -508,11 +503,79 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 11. The product is intended for single-user desktop use and is not required to support concurrent editing by multiple staff members.
 
 
-
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+**AB3 (AddressBook Level-3)**  
+The baseline codebase from which GymContactsPro is developed. Refers to the SE-EDU AddressBook-Level3 project.
+
+**Command**  
+A text instruction entered by the Gym Manager to perform an operation in GymContactsPro.
+
+**Command Format**  
+The required structure for entering a valid command in GymContactsPro.
+
+**Command Line Interface (CLI)**  
+A text-based interface that allows the Gym Manager to interact with GymContactsPro by typing commands instead of using graphical buttons.
+
+**Duplicate Member**  
+A situation where a member being added or edited has the same identifying fields as an existing member.
+
+**Error Message**  
+A system-generated message displayed when the requested operation cannot be completed.
+
+**Front-Desk Staff**  
+Personnel working at the gym reception who manage member registrations, check-ins, and membership records using GymContactsPro.
+
+**Gym Manager**  
+The primary user of GymContactsPro who manages gym member records and memberships.
+
+**GymContactsPro**  
+A command-line based gym member management application designed to help gym managers efficiently manage member records and memberships.
+
+**JavaFX**  
+A Java GUI framework used to render the visual interface of GymContactsPro, displaying member records in a structured layout.
+
+**JSON (JavaScript Object Notation)**  
+A human-readable file format used by GymContactsPro to store member data persistently.
+
+**Mainstream Operating Systems**  
+Widely used operating systems such as Windows, macOS and Linux that GymContactsPro is designed to run on.
+
+**Member**  
+An individual registered in GymContactsPro with personal and membership information.
+
+**Member Lookup**  
+The process of searching for and retrieving a member’s record from the system using attributes such as name, phone number, or membership ID.
+
+**Member Record**  
+A stored set of information about a gym member, including personal details and membership information.
+
+**Membership Expiry Date**  
+The date on which a member’s membership becomes invalid.
+
+**Membership ID**  
+A unique identifier assigned to each gym member.
+
+**Membership Validity**  
+The period during which a member's gym membership is considered active.
+
+**Offline Usage**  
+The ability to use GymContactsPro without an Internet connection after installation.
+
+**Persistent Storage**  
+The method used by GymContactsPro to store member data so that it remains available after the application is closed and reopened.
+
+**Prefix**  
+A short identifier used before a value in a command to indicate the type of data being entered (e.g., `n/`, `p/`, `e/`).
+
+**Search Attribute**  
+A specific field (such as name, phone number, or email) used to locate members in the system.
+
+**Sorting**  
+The process of arranging members in a specific order.
+
+**Success Message**  
+A confirmation message shown after a command has been executed successfully.
 
 --------------------------------------------------------------------------------------------------------------------
 
