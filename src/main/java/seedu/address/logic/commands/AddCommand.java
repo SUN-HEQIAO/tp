@@ -11,6 +11,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.MembershipId;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,6 +38,9 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_ADDRESS_BOOK_FULL =
+            "Cannot add more contacts. Address book has reached its maximum capacity of "
+            + MembershipId.MAX_CAPACITY + " contacts.";
 
     private final Person toAdd;
 
@@ -56,8 +60,18 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        // Check if address book has reached maximum capacity
+        if (!model.canGenerateMembershipId()) {
+            throw new CommandException(MESSAGE_ADDRESS_BOOK_FULL);
+        }
+
+        // Generate new membership ID and create person with it
+        int newMembershipId = model.getNextMembershipId();
+        Person personWithId = new Person(toAdd.getName(), toAdd.getPhone(), toAdd.getEmail(),
+                toAdd.getAddress(), toAdd.getTags(), new MembershipId(newMembershipId));
+
+        model.addPerson(personWithId);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personWithId)));
     }
 
     @Override

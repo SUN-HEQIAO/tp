@@ -169,7 +169,10 @@ public class LogicManagerTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
-        expectedModel.addPerson(expectedPerson);
+        // Sync the membership ID counter - AddCommand will call getNextMembershipId()
+        int nextId = expectedModel.getNextMembershipId();
+        Person personWithId = new PersonBuilder(expectedPerson).withMembershipId(nextId).build();
+        expectedModel.addPerson(personWithId);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

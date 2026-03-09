@@ -31,10 +31,13 @@ public class AddCommandIntegrationTest {
         Person validPerson = new PersonBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        // AddCommand will assign the next available membership ID
+        int nextId = expectedModel.getNextMembershipId();
+        Person personWithCorrectId = new PersonBuilder(validPerson).withMembershipId(nextId).build();
+        expectedModel.addPerson(personWithCorrectId);
 
         assertCommandSuccess(new AddCommand(validPerson), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(personWithCorrectId)),
                 expectedModel);
     }
 

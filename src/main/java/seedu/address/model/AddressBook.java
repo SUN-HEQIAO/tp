@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.MembershipId;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -16,6 +17,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private int nextMembershipId;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        nextMembershipId = MembershipId.MIN_ID;
     }
 
     public AddressBook() {}
@@ -55,6 +58,37 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        updateNextMembershipId();
+    }
+
+    /**
+     * Updates the next membership ID based on the current persons in the address book.
+     * Sets it to the maximum existing ID + 1, or MIN_ID if no persons exist.
+     */
+    private void updateNextMembershipId() {
+        if (getPersonList().isEmpty()) {
+            nextMembershipId = MembershipId.MIN_ID;
+        } else {
+            int maxId = Integer.MIN_VALUE;
+            for (Person person : getPersonList()) {
+                maxId = Math.max(maxId, person.getMembershipId().value);
+            }
+            nextMembershipId = maxId + 1;
+        }
+    }
+
+    /**
+     * Gets the next available membership ID and increments the counter.
+     */
+    public int getNextMembershipId() {
+        return nextMembershipId++;
+    }
+
+    /**
+     * Returns true if another membership ID can still be generated.
+     */
+    public boolean canGenerateMembershipId() {
+        return nextMembershipId <= MembershipId.MAX_ID;
     }
 
     //// person-level operations

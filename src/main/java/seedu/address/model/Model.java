@@ -76,6 +76,16 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
+    /**
+     * Gets the next available membership ID and increments the counter.
+     */
+    int getNextMembershipId();
+
+    /**
+     * Returns true if a new membership ID can still be generated.
+     */
+    boolean canGenerateMembershipId();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

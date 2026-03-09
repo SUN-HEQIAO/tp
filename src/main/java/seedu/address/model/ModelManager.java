@@ -111,6 +111,16 @@ public class ModelManager implements Model {
         addressBook.setPerson(target, editedPerson);
     }
 
+    @Override
+    public int getNextMembershipId() {
+        return addressBook.getNextMembershipId();
+    }
+
+    @Override
+    public boolean canGenerateMembershipId() {
+        return addressBook.canGenerateMembershipId();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
