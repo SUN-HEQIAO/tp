@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MembershipExpiryDate;
 import seedu.address.model.person.MembershipId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final int DEFAULT_MEMBERSHIP_ID = MembershipId.MIN_ID;
+    public static final String DEFAULT_MEMBERSHIP_EXPIRY_DATE = "2099-12-31";
 
     private Name name;
     private Phone phone;
@@ -29,6 +31,7 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private MembershipId membershipId;
+    private MembershipExpiryDate membershipExpiryDate;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +43,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         membershipId = new MembershipId(DEFAULT_MEMBERSHIP_ID);
+        membershipExpiryDate = new MembershipExpiryDate(DEFAULT_MEMBERSHIP_EXPIRY_DATE);
     }
 
     /**
@@ -52,6 +56,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
         membershipId = personToCopy.getMembershipId();
+        membershipExpiryDate = personToCopy.getMembershipExpiryDate();
     }
 
     /**
@@ -102,8 +107,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code MembershipExpiryDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMembershipExpiryDate(String membershipExpiryDate) {
+        this.membershipExpiryDate = new MembershipExpiryDate(membershipExpiryDate);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags, membershipId);
+        return new Person(name, phone, email, address, tags, membershipId, membershipExpiryDate);
     }
 
 }

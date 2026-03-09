@@ -46,7 +46,9 @@ public class Messages {
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         builder.append("; Membership ID: ")
-                .append(person.getMembershipId());
+                .append(person.getMembershipId())
+                .append("; Membership Expiry Date: ")
+                .append(person.getMembershipExpiryDate());
         return builder.toString();
     }
 

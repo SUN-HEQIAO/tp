@@ -6,48 +6,55 @@
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
     "tags" : [ "friends" ],
-    "membershipId" : 1000
+    "membershipId" : 1000,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ],
-    "membershipId" : 1001
+    "membershipId" : 1001,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
     "tags" : [ ],
-    "membershipId" : 1002
+    "membershipId" : 1002,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "tags" : [ "friends" ],
-    "membershipId" : 1003
+    "membershipId" : 1003,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
     "tags" : [ ],
-    "membershipId" : 1004
+    "membershipId" : 1004,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
     "tags" : [ ],
-    "membershipId" : 1005
+    "membershipId" : 1005,
+    "membershipExpiryDate" : "2099-12-31"
   }, {
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
     "address" : "4th street",
     "tags" : [ ],
-    "membershipId" : 1006
+    "membershipId" : 1006,
+    "membershipExpiryDate" : "2099-12-31"
   } ]
 }
