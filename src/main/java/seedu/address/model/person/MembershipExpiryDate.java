@@ -53,6 +53,7 @@ public class MembershipExpiryDate {
             return true;
         }
 
+        // instanceof handles nulls
         if (!(other instanceof MembershipExpiryDate)) {
             return false;
         }

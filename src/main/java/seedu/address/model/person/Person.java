@@ -25,16 +25,21 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    // Membership fields
+    private final MembershipExpiryDate membershipExpiryDate;
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  MembershipExpiryDate membershipExpiryDate) {
+        requireAllNonNull(name, phone, email, address, tags, membershipExpiryDate);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.membershipExpiryDate = membershipExpiryDate;
     }
 
     public Name getName() {
@@ -59,6 +64,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public MembershipExpiryDate getMembershipExpiryDate() {
+        return membershipExpiryDate;
     }
 
     /**
@@ -94,7 +103,8 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && membershipExpiryDate.equals(otherPerson.membershipExpiryDate);
     }
 
     @Override
@@ -111,6 +121,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("membershipExpiryDate", membershipExpiryDate)
                 .toString();
     }
 
