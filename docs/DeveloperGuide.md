@@ -542,19 +542,19 @@ A Java GUI framework used to render the visual interface of GymContactsPro, disp
 A human-readable file format used by GymContactsPro to store member data persistently.
 
 **Mainstream Operating Systems**  
-Widely used operating systems such as Windows, macOS and Linux that GymContactsPro is designed to run on.
+Widely used operating systems such as Windows, macOS, and Linux that GymContactsPro is designed to run on.
 
 **Member**  
 An individual registered in GymContactsPro with personal and membership information.
 
 **Member Lookup**  
-The process of searching for and retrieving a member’s record from the system using attributes such as name, phone number, or membership ID.
+The process of searching for and retrieving a member's record from the system using attributes such as name, phone number, or membership ID.
 
 **Member Record**  
 A stored set of information about a gym member, including personal details and membership information.
 
 **Membership Expiry Date**  
-The date on which a member’s membership becomes invalid.
+The date on which a member's membership becomes invalid.
 
 **Membership ID**  
 A unique identifier assigned to each gym member.
@@ -569,7 +569,7 @@ The ability to use GymContactsPro without an Internet connection after installat
 The method used by GymContactsPro to store member data so that it remains available after the application is closed and reopened.
 
 **Prefix**  
-A short identifier used before a value in a command to indicate the type of data being entered (e.g., `n/`, `p/`, `e/`).
+A short identifier used before a value in a command to indicate the type of data being entered (for example, `n/`, `p/`, `e/`).
 
 **Search Attribute**  
 A specific field (such as name, phone number, or email) used to locate members in the system.
