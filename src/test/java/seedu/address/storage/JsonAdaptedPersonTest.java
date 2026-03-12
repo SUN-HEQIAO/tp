@@ -24,7 +24,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
-    private static final int INVALID_MEMBERSHIP_ID = 999; // ADD THIS — below MIN_ID of 1000
+    private static final Integer INVALID_MEMBERSHIP_ID = 999; // ADD THIS — below MIN_ID of 1000
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -33,7 +33,7 @@ public class JsonAdaptedPersonTest {
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
         .map(JsonAdaptedTag::new)
         .collect(Collectors.toList());
-    private static final int VALID_MEMBERSHIP_ID = BENSON.getMembershipId().value; // ADD THIS
+    private static final Integer VALID_MEMBERSHIP_ID = BENSON.getMembershipId().value; // ADD THIS
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
