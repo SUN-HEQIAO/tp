@@ -52,7 +52,7 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList()));
-        membershipId = source.getMembershipId().value; // ADD THIS
+        membershipId = source.getMembershipId().value;
     }
 
     public Person toModelType() throws IllegalValueException {

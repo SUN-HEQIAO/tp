@@ -24,7 +24,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
-    private static final Integer INVALID_MEMBERSHIP_ID = MembershipId.MIN_ID-1;
+    private static final Integer INVALID_MEMBERSHIP_ID = MembershipId.MIN_ID - 1;
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -115,7 +115,7 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidMembershipId_throwsIllegalValueException() { // ADD THIS
+    public void toModelType_invalidMembershipId_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(
             VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, INVALID_MEMBERSHIP_ID);
         String expectedMessage = MembershipId.MESSAGE_CONSTRAINTS;

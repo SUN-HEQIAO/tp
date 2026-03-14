@@ -44,9 +44,10 @@ public class TypicalPersons {
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
         .withEmail("anna@example.com").withAddress("4th street").withMembershipId(MembershipId.MIN_ID + 6).build();
 
-        // Manually added
+    // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withMembershipId(MembershipId.MIN_ID + 7).build();
+            .withEmail("stefan@example.com").withAddress("little india")
+            .withMembershipId(MembershipId.MIN_ID + 7).build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").withMembershipId(MembershipId.MIN_ID + 8).build();
 
