@@ -11,21 +11,6 @@ import java.util.Locale;
  */
 public class Email {
 
-    private static final String SPECIAL_CHARACTERS = "+_.-";
-    private static final int MAX_EMAIL_LENGTH = 254;
-    private static final int MAX_LOCAL_PART_LENGTH = 64;
-    private static final int MAX_DOMAIN_LABEL_LENGTH = 63;
-    private static final String IPV4_LITERAL_REGEX = "^\\[(\\d{1,3}\\.){3}\\d{1,3}]$";
-
-    // alphanumeric and special characters
-    private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
-    private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_NO_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
-            + ALPHANUMERIC_NO_UNDERSCORE + ")*";
-    private static final String DOMAIN_PART_REGEX = ALPHANUMERIC_NO_UNDERSCORE
-            + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
-    private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
-    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
-
     public static final String MESSAGE_CONSTRAINTS =
             "Emails should be of the format local-part@domain and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters "
@@ -40,6 +25,21 @@ public class Email {
             + "    - end with a domain label at least 2 characters long\n"
             + "    - have each domain label start and end with alphanumeric characters\n"
             + "    - have each domain label consist of alphanumeric characters separated only by hyphens.";
+
+    // alphanumeric and special characters
+    private static final String SPECIAL_CHARACTERS = "+_.-";
+    private static final int MAX_EMAIL_LENGTH = 254;
+    private static final int MAX_LOCAL_PART_LENGTH = 64;
+    private static final int MAX_DOMAIN_LABEL_LENGTH = 63;
+    private static final String IPV4_LITERAL_REGEX = "^\\[(\\d{1,3}\\.){3}\\d{1,3}]$";
+    private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
+    private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_NO_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
+            + ALPHANUMERIC_NO_UNDERSCORE + ")*";
+    private static final String DOMAIN_PART_REGEX = ALPHANUMERIC_NO_UNDERSCORE
+            + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
+    private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
+    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
+
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
     public final String value;
