@@ -52,5 +52,14 @@ public class AddressTest {
 
         // different values -> returns false
         assertFalse(address.equals(new Address("Other Valid Address")));
+
+        // same address with and without commas -> returns true
+        assertTrue(new Address("123 Main St, City").equals(new Address("123 Main St City")));
+
+        // same address with different comma placement -> returns true
+        assertTrue(new Address("Blk 456, Den Road, #01-355").equals(new Address("Blk 456 Den Road #01-355")));
+
+        // same address with extra spaces and commas -> returns true
+        assertTrue(new Address("123  Main St,  City").equals(new Address("123 Main St City")));
     }
 }
