@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MembershipExpiryDate;
 import seedu.address.model.person.MembershipId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -103,8 +104,11 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         // Membership ID cannot be edited - preserve original
         MembershipId membershipId = personToEdit.getMembershipId();
+        // Membership Expiry Date cannot be edited (at the moment) - preserve original
+        MembershipExpiryDate membershipExpiryDate = personToEdit.getMembershipExpiryDate();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, membershipId);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, membershipId,
+                membershipExpiryDate);
     }
 
     @Override
