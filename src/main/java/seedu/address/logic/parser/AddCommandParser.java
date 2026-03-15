@@ -14,6 +14,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MembershipExpiryDate;
 import seedu.address.model.person.MembershipId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -47,8 +48,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         // Use placeholder membership ID - will be assigned by AddCommand
+        // Use placeholder expiry date - will be updated when add/edit commands support it
         Person person = new Person(name, phone, email, address, tagList,
-                new MembershipId(MembershipId.MIN_ID));
+                new MembershipId(MembershipId.MIN_ID), new MembershipExpiryDate("2099-12-31"));
 
         return new AddCommand(person);
     }
