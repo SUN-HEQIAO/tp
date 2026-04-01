@@ -51,6 +51,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ALL_FIELDS_IDENTICAL = "No changes were made because all fields are identical.";
+    public static final String MESSAGE_UNCHANGED_FIELDS = " Unchanged fields: ";
 
     private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
@@ -91,6 +93,12 @@ public class EditCommand extends Command {
             throw new CommandException(String.format(Messages.MESSAGE_PERSON_NOT_FOUND, membershipId));
         }
 
+        // Check if all fields provided are identical to existing values
+        if (areAllFieldsIdentical(personToEdit)) {
+            logger.info("All provided fields are identical to existing values for Membership ID: " + membershipId);
+            return new CommandResult(MESSAGE_ALL_FIELDS_IDENTICAL);
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -99,9 +107,102 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        // Start to build message with unchanged fields information
+        // Message will be empty if there are no unchanged fields
+        // Message will be built even if there are no fields to edit
+        String unchangedMsg = buildUnchangedFieldsMessage(personToEdit);
+
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        String resultMsg = String.format(MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedPerson)) + unchangedMsg;
+        return new CommandResult(resultMsg);
+    }
+
+    /**
+     * Checks if all provided fields in the descriptor are identical to the existing person's values.
+     */
+    private boolean areAllFieldsIdentical(Person personToEdit) {
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            return false; // No fields were provided, don't bother checking if they're identical.
+        }
+
+        // Assume all fields are identical until we find one that is different
+        boolean allIdentical = true;
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            if (!editPersonDescriptor.getName().get().equals(personToEdit.getName())) {
+                allIdentical = false;
+            }
+        }
+
+        if (editPersonDescriptor.getPhone().isPresent()) {
+            if (!editPersonDescriptor.getPhone().get().equals(personToEdit.getPhone())) {
+                allIdentical = false;
+            }
+        }
+
+        if (editPersonDescriptor.getEmail().isPresent()) {
+            if (!editPersonDescriptor.getEmail().get().equals(personToEdit.getEmail())) {
+                allIdentical = false;
+            }
+        }
+
+        if (editPersonDescriptor.getAddress().isPresent()) {
+            if (!editPersonDescriptor.getAddress().get().equals(personToEdit.getAddress())) {
+                allIdentical = false;
+            }
+        }
+
+        if (editPersonDescriptor.getMembershipExpiryDate().isPresent()) {
+            if (!editPersonDescriptor.getMembershipExpiryDate().get().equals(personToEdit.getMembershipExpiryDate())) {
+                allIdentical = false;
+            }
+        }
+
+        return allIdentical;
+    }
+
+    /**
+     * Builds a message indicating which fields were not changed during editing.
+     * Only returns a message if there are unchanged fields.
+     */
+    private String buildUnchangedFieldsMessage(Person personToEdit) {
+        StringBuilder unchangedFields = new StringBuilder();
+
+        if (editPersonDescriptor.getName().isPresent()
+                && editPersonDescriptor.getName().get().equals(personToEdit.getName())) {
+            unchangedFields.append("Name, ");
+        }
+
+        if (editPersonDescriptor.getPhone().isPresent()
+                && editPersonDescriptor.getPhone().get().equals(personToEdit.getPhone())) {
+            unchangedFields.append("Phone, ");
+        }
+
+        if (editPersonDescriptor.getEmail().isPresent()
+                && editPersonDescriptor.getEmail().get().equals(personToEdit.getEmail())) {
+            unchangedFields.append("Email, ");
+        }
+
+        if (editPersonDescriptor.getAddress().isPresent()
+                && editPersonDescriptor.getAddress().get().equals(personToEdit.getAddress())) {
+            unchangedFields.append("Address, ");
+        }
+
+        if (editPersonDescriptor.getMembershipExpiryDate().isPresent()
+                && editPersonDescriptor.getMembershipExpiryDate().get()
+                        .equals(personToEdit.getMembershipExpiryDate())) {
+            unchangedFields.append("Membership Expiry Date, ");
+        }
+
+        // Return message if there are unchanged fields
+        if (unchangedFields.length() > 0) {
+            unchangedFields.setLength(unchangedFields.length() - 2);
+            return MESSAGE_UNCHANGED_FIELDS + unchangedFields.toString();
+        }
+
+        return "";
     }
 
     /**
