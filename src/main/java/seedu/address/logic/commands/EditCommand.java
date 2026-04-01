@@ -109,7 +109,6 @@ public class EditCommand extends Command {
 
         // Start to build message with unchanged fields information
         // Message will be empty if there are no unchanged fields
-        // Message will be built even if there are no fields to edit
         String unchangedMsg = buildUnchangedFieldsMessage(personToEdit);
 
         model.setPerson(personToEdit, editedPerson);
