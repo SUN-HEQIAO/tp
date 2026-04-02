@@ -51,8 +51,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_ALL_FIELDS_IDENTICAL = "No changes were made because all fields are identical.";
-    public static final String MESSAGE_UNCHANGED_FIELDS = " Unchanged fields: ";
+    public static final String MESSAGE_ALL_FIELDS_IDENTICAL = "No edit was done because all proposed changes are identical.";
+    public static final String MESSAGE_UNCHANGED_FIELDS = "\nUnchanged fields: ";
 
     private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
@@ -122,9 +122,6 @@ public class EditCommand extends Command {
      * Checks if all provided fields in the descriptor are identical to the existing person's values.
      */
     private boolean areAllFieldsIdentical(Person personToEdit) {
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            return false; // No fields were provided, don't bother checking if they're identical.
-        }
 
         // Assume all fields are identical until we find one that is different
         boolean allIdentical = true;
