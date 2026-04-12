@@ -278,24 +278,6 @@ public class EditCommandTest {
     }
 
 
-    /**
-     * Returns a membership ID that is valid by constraints but not present in the model.
-     */
-    private MembershipId getValidButNonExistentMembershipId(Model model) {
-        Set<Integer> usedIds = new HashSet<>();
-        for (Person person : model.getAddressBook().getPersonList()) {
-            usedIds.add(person.getMembershipId().value);
-        }
-
-        for (int id = MembershipId.MIN_ID; id <= MembershipId.MAX_ID; id++) {
-            if (!usedIds.contains(id)) {
-                return new MembershipId(id);
-            }
-        }
-
-        throw new AssertionError("Test fixture exhausted all membership IDs.");
-    }
-
     @Test
     public void execute_nameCapitalizationOnlyEdit_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -354,4 +336,23 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
+
+    /**
+     * Returns a membership ID that is valid by constraints but not present in the model.
+     */
+    private MembershipId getValidButNonExistentMembershipId(Model model) {
+        Set<Integer> usedIds = new HashSet<>();
+        for (Person person : model.getAddressBook().getPersonList()) {
+            usedIds.add(person.getMembershipId().value);
+        }
+
+        for (int id = MembershipId.MIN_ID; id <= MembershipId.MAX_ID; id++) {
+            if (!usedIds.contains(id)) {
+                return new MembershipId(id);
+            }
+        }
+
+        throw new AssertionError("Test fixture exhausted all membership IDs.");
+    }
 }
+

@@ -95,21 +95,43 @@ public class EditCommand extends Command {
 
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!hasMeaningfulChange(personToEdit, editedPerson, editPersonDescriptor)) {
+        Name originalName = personToEdit.getName();
+        Address originalAddress = personToEdit.getAddress();
+
+        boolean sameRawName = editPersonDescriptor.getName()
+                .map(name -> name.fullName.equals(originalName.fullName))
+                .orElse(true);
+        boolean sameRawAddress = editPersonDescriptor.getAddress()
+                .map(address -> address.value.equals(originalAddress.value))
+                .orElse(true);
+
+        if (personToEdit.equals(editedPerson) && sameRawName && sameRawAddress) {
             return new CommandResult(MESSAGE_NO_CHANGES);
         }
         List<String> changed = new ArrayList<>();
         List<String> unchanged = new ArrayList<>();
-        classifyField("Name", editPersonDescriptor.getName(), personToEdit.getName(), changed, unchanged,
-                EditCommand::isNameRawEqual);
-        classifyField("Phone", editPersonDescriptor.getPhone(), personToEdit.getPhone(), changed, unchanged,
-                Objects::equals);
-        classifyField("Email", editPersonDescriptor.getEmail(), personToEdit.getEmail(), changed, unchanged,
-                Objects::equals);
-        classifyField("Address", editPersonDescriptor.getAddress(), personToEdit.getAddress(), changed, unchanged,
-                EditCommand::isAddressRawEqual);
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            if (sameRawName) {
+                unchanged.add("Name");
+            } else {
+                changed.add("Name");
+            }
+        }
+
+        classifyField("Phone", editPersonDescriptor.getPhone(), personToEdit.getPhone(), changed, unchanged);
+        classifyField("Email", editPersonDescriptor.getEmail(), personToEdit.getEmail(), changed, unchanged);
+
+        if (editPersonDescriptor.getAddress().isPresent()) {
+            if (sameRawAddress) {
+                unchanged.add("Address");
+            } else {
+                changed.add("Address");
+            }
+        }
+
         classifyField("Membership Expiry Date", editPersonDescriptor.getMembershipExpiryDate(),
-                personToEdit.getMembershipExpiryDate(), changed, unchanged, Objects::equals);
+                personToEdit.getMembershipExpiryDate(), changed, unchanged);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             logger.warning("Duplicate member detected while editing Membership ID: " + membershipId
@@ -141,44 +163,15 @@ public class EditCommand extends Command {
      * @param <T> Type of the field value.
      */
     private static <T> void classifyField(String fieldName, Optional<T> maybeNewValue, T originalValue,
-                                          List<String> changed, List<String> unchanged,
-                                          java.util.function.BiPredicate<T, T> equalityChecker) {
+                                          List<String> changed, List<String> unchanged) {
         if (maybeNewValue.isEmpty()) {
             return;
         }
-        if (equalityChecker.test(maybeNewValue.get(), originalValue)) {
+        if (maybeNewValue.get().equals(originalValue)) {
             unchanged.add(fieldName);
         } else {
             changed.add(fieldName);
         }
-    }
-
-    private static boolean hasMeaningfulChange(Person originalPerson, Person editedPerson,
-                                                EditPersonDescriptor descriptor) {
-        if (!originalPerson.equals(editedPerson)) {
-            return true;
-        }
-
-        // Name/Address equality is normalized; compare raw values so case-only edits are recognized.
-        if (descriptor.getName().isPresent()
-                && !isNameRawEqual(descriptor.getName().get(), originalPerson.getName())) {
-            return true;
-        }
-
-        if (descriptor.getAddress().isPresent()
-                && !isAddressRawEqual(descriptor.getAddress().get(), originalPerson.getAddress())) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private static boolean isNameRawEqual(Name first, Name second) {
-        return first.fullName.equals(second.fullName);
-    }
-
-    private static boolean isAddressRawEqual(Address first, Address second) {
-        return first.value.equals(second.value);
     }
 
     /**
