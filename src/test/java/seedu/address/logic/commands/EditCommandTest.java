@@ -295,4 +295,63 @@ public class EditCommandTest {
 
         throw new AssertionError("Test fixture exhausted all membership IDs.");
     }
+
+    @Test
+    public void execute_nameCapitalizationOnlyEdit_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String originalName = personToEdit.getName().fullName;
+        String capitalizedName = originalName.toUpperCase();
+
+        // Ensure this remains a capitalization-only edit.
+        if (capitalizedName.equals(originalName)) {
+            capitalizedName = Character.toUpperCase(originalName.charAt(0)) + originalName.substring(1).toLowerCase();
+        }
+
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withName(capitalizedName)
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName(capitalizedName)
+                .build();
+        EditCommand editCommand = new EditCommand(personToEdit.getMembershipId(), descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
+                + "\nChanged field(s): Name";
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addressCapitalizationOnlyEdit_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String originalAddress = personToEdit.getAddress().value;
+        String capitalizedAddress = originalAddress.toUpperCase();
+
+        // Ensure this remains a capitalization-only edit.
+        if (capitalizedAddress.equals(originalAddress)) {
+            capitalizedAddress = Character.toUpperCase(originalAddress.charAt(0))
+                    + originalAddress.substring(1).toLowerCase();
+        }
+
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withAddress(capitalizedAddress)
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withAddress(capitalizedAddress)
+                .build();
+        EditCommand editCommand = new EditCommand(personToEdit.getMembershipId(), descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson))
+                + "\nChanged field(s): Address";
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
 }
