@@ -171,6 +171,10 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.show();
             logger.info("Opened Help window.");
             resultDisplay.setFeedbackToUser("Opened help window");
+        } else if (helpWindow.getRoot().isIconified()) {
+            helpWindow.getRoot().setIconified(false);
+            helpWindow.focus();
+            logger.info("Expanded and focused on help window.");
         } else {
             helpWindow.focus();
             logger.info("Focused on Help window.");
