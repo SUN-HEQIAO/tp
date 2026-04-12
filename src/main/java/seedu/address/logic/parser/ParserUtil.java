@@ -121,6 +121,20 @@ public class ParserUtil {
         return new MembershipExpiryDate(trimmedExpiryDate);
     }
 
+    /**
+     * Parses a {@code String expiryDate} for find command usage unlike {@link #parseMembershipExpiryDate(String)}.
+     * @throws ParseException if the given {@code expiryDate} has an invalid date format or value.
+     */
+    public static void parseMembershipExpiryDateForFind(String expiryDate) throws ParseException {
+        requireNonNull(expiryDate);
+        String trimmedExpiryDate = expiryDate.trim();
+
+        try {
+            MembershipExpiryDate.DATE_FORMATTER.parse(trimmedExpiryDate);
+        } catch (DateTimeParseException e) {
+            throw new ParseException(MembershipExpiryDate.MESSAGE_FIND_CONSTRAINTS);
+        }
+    }
 
     /**
      * Parses a {@code String membershipId} into a {@code MembershipId}.

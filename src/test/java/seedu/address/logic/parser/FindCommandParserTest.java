@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ import seedu.address.model.person.PostalCodeContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private final FindCommandParser parser = new FindCommandParser();
 
     @Test
     public void parse_nonEmptyPreamble_throwsParseException() {
@@ -36,18 +37,18 @@ public class FindCommandParserTest {
     @Test
     public void parse_nameKeywords_returnsFindCommand() {
         FindCommand expectedSingle =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
+                new FindCommand(new NameContainsKeywordsPredicate(List.of("Alice")));
         assertParseSuccess(parser, " n/Alice", expectedSingle);
 
         FindCommand expectedMultiple =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                new FindCommand(new NameContainsKeywordsPredicate(List.of("Alice", "Bob")));
         assertParseSuccess(parser, " n/Alice Bob", expectedMultiple);
     }
 
     @Test
     public void parse_multipleKeywordsWithExtraSpaces_returnsFindCommand() {
         FindCommand expectedFindCommand =
-            new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+            new FindCommand(new NameContainsKeywordsPredicate(List.of("Alice", "Bob")));
         // multiple spaces between keywords
         assertParseSuccess(parser, " n/Alice    Bob", expectedFindCommand);
         // leading and trailing whitespace
@@ -57,7 +58,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_nameKeywordsWithIrregularWhitespace_returnsFindCommand() {
         FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                new FindCommand(new NameContainsKeywordsPredicate(List.of("Alice", "Bob")));
 
         // many spaces
         assertParseSuccess(parser, " n/" + "Alice    Bob", expectedFindCommand);
@@ -77,7 +78,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_phoneKeywords_returnsFindCommand() {
         FindCommand expectedFindCommand =
-            new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("91234567", "98765432")));
+            new FindCommand(new PhoneContainsKeywordsPredicate(List.of("91234567", "98765432")));
         assertParseSuccess(parser, " p/91234567 98765432", expectedFindCommand);
     }
 
@@ -90,34 +91,38 @@ public class FindCommandParserTest {
     @Test
     public void parse_postalCodeKeywords_returnsFindCommand() {
         FindCommand expectedFindCommandSingle =
-            new FindCommand(new PostalCodeContainsKeywordsPredicate(Arrays.asList("123456")));
+            new FindCommand(new PostalCodeContainsKeywordsPredicate(List.of("123456")));
         assertParseSuccess(parser, " a/123456", expectedFindCommandSingle);
 
         FindCommand expectedFindCommandMultiple =
-            new FindCommand(new PostalCodeContainsKeywordsPredicate(Arrays.asList("123456", "654321")));
+            new FindCommand(new PostalCodeContainsKeywordsPredicate(List.of("123456", "654321")));
         assertParseSuccess(parser, " a/123456 654321", expectedFindCommandMultiple);
     }
 
     @Test
     public void parse_expiryDateKeywords_returnsFindCommand() {
         FindCommand expectedFindCommandSingle =
-            new FindCommand(new ExpiryDateContainsKeywordsPredicate(Arrays.asList("2026-12-31")));
+            new FindCommand(new ExpiryDateContainsKeywordsPredicate(List.of("2026-12-31")));
         assertParseSuccess(parser, " m/2026-12-31", expectedFindCommandSingle);
 
         FindCommand expectedFindCommandMultiple =
-            new FindCommand(new ExpiryDateContainsKeywordsPredicate(Arrays.asList("2026-12-31", "2027-01-01")));
+            new FindCommand(new ExpiryDateContainsKeywordsPredicate(List.of("2026-12-31", "2027-01-01")));
         assertParseSuccess(parser, " m/2026-12-31 2027-01-01", expectedFindCommandMultiple);
+
+        FindCommand expectedFindCommandExpired =
+            new FindCommand(new ExpiryDateContainsKeywordsPredicate(List.of("2020-01-01")));
+        assertParseSuccess(parser, " m/2020-01-01", expectedFindCommandExpired);
     }
 
     @Test
     public void parse_emailKeywords_returnsFindCommand() {
         FindCommand expectedFindCommandSingle =
-            new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice@example.com")));
+            new FindCommand(new EmailContainsKeywordsPredicate(List.of("alice@example.com")));
         assertParseSuccess(parser, " e/alice@example.com", expectedFindCommandSingle);
 
         FindCommand expectedFindCommandMultiple =
-            new FindCommand(new EmailContainsKeywordsPredicate(Arrays
-                .asList("alice@example.com", "bob@example.com")));
+            new FindCommand(new EmailContainsKeywordsPredicate(List
+                .of("alice@example.com", "bob@example.com")));
         assertParseSuccess(parser, " e/alice@example.com bob@example.com", expectedFindCommandMultiple);
     }
 
@@ -153,11 +158,11 @@ public class FindCommandParserTest {
     @Test
     public void parse_membershipIdKeywords_returnsFindCommand() {
         FindCommand expectedFindCommandSingle =
-                new FindCommand(new MembershipIdContainsPredicate(Arrays.asList("1000")));
+                new FindCommand(new MembershipIdContainsPredicate(List.of("1000")));
         assertParseSuccess(parser, " id/1000", expectedFindCommandSingle);
 
         FindCommand expectedFindCommandMultiple =
-                new FindCommand(new MembershipIdContainsPredicate(Arrays.asList("1000", "1001", "1002")));
+                new FindCommand(new MembershipIdContainsPredicate(List.of("1000", "1001", "1002")));
         assertParseSuccess(parser, " id/1000 1001 1002", expectedFindCommandMultiple);
     }
 
@@ -193,7 +198,7 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_invalidMembershipExpiryDateKeyword_throwsParseException() {
-        assertParseFailure(parser, " m/2020-01-01",
+        assertParseFailure(parser, " m/2020-13-01",
             MembershipExpiryDate.MESSAGE_CONSTRAINTS);
     }
 }
