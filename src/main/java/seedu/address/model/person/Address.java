@@ -76,12 +76,20 @@ public class Address {
         }
 
         Address otherAddress = (Address) other;
-        return normalizedValue.equals(otherAddress.normalizedValue);
+        return value.equals(otherAddress.value);
     }
 
     @Override
     public int hashCode() {
-        return normalizedValue.hashCode();
+        return value.hashCode();
+    }
+
+    /**
+     * Returns true if both addresses are logically the same (case-insensitive, ignoring commas and whitespace).
+     * Used for duplicate detection.
+     */
+    public boolean isSameLogicalAddress(Address other) {
+        return normalizedValue.equals(other.normalizedValue);
     }
 
 }

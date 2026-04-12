@@ -57,14 +57,18 @@ public class AddressTest {
         // different values -> returns false
         assertFalse(address.equals(new Address("Other Valid Address 654321")));
 
-        // same address with and without commas -> returns true
-        assertTrue(new Address("123 Main St, City 123456").equals(new Address("123 Main St City 123456")));
+        // same address with and without commas -> different by equals(), but same by logical equality
+        assertFalse(new Address("123 Main St, City 123456").equals(new Address("123 Main St City 123456")));
+        assertTrue(new Address("123 Main St, City 123456").isSameLogicalAddress(new Address("123 Main St City 123456")));
 
-        // same address with different comma placement -> returns true
-        assertTrue(new Address("Blk 456, Den Road, #01-355, 123456")
+        // same address with different comma placement -> different by equals(), but same by logical equality
+        assertFalse(new Address("Blk 456, Den Road, #01-355, 123456")
                 .equals(new Address("Blk 456 Den Road #01-355 123456")));
+        assertTrue(new Address("Blk 456, Den Road, #01-355, 123456")
+                .isSameLogicalAddress(new Address("Blk 456 Den Road #01-355 123456")));
 
-        // same address with extra spaces and commas -> returns true
-        assertTrue(new Address("123  Main St,  City 756452").equals(new Address("123 Main St City 756452")));
+        // same address with extra spaces and commas -> different by equals(), but same by logical equality
+        assertFalse(new Address("123  Main St,  City 756452").equals(new Address("123 Main St City 756452")));
+        assertTrue(new Address("123  Main St,  City 756452").isSameLogicalAddress(new Address("123 Main St City 756452")));
     }
 }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -29,26 +30,34 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same phone, different email -> returns true
-        Person editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).build();
+        // same logical name, same phone, same logical address -> returns true
+        Person editedAlice = new PersonBuilder(ALICE).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // same email, different phone -> returns true
-        editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
-
-        // different phone and different email -> returns false
-        editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        // different logical name -> returns false
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // same email ignores case -> returns true
-        Person editedBob = new PersonBuilder(BOB).withEmail(VALID_EMAIL_BOB.toUpperCase()).build();
-        assertTrue(BOB.isSamePerson(editedBob));
+        // same logical name but different phone -> returns false
+        editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // same phone ignores case -> returns true
-        editedBob = new PersonBuilder(BOB).withPhone(VALID_PHONE_BOB).build();
-        assertTrue(BOB.isSamePerson(editedBob));
+        // same logical name, same phone, but different logical address -> returns false
+        editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
+
+        // same logical name (ignores case), same phone, same logical address -> returns true
+        editedAlice = new PersonBuilder(ALICE).withName(ALICE.getName().fullName.toUpperCase()).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
+
+        // same logical address ignores formatting -> returns true if name and phone also match
+        editedAlice = new PersonBuilder(ALICE).withAddress("Blk 123 Fake Street, 012345").build();
+        // Only true if logical name and phone also match
+        if (ALICE.getAddress().isSameLogicalAddress(editedAlice.getAddress())
+                && ALICE.getName().isSameLogicalName(editedAlice.getName())
+                && ALICE.getPhone().equals(editedAlice.getPhone())) {
+            assertTrue(ALICE.isSamePerson(editedAlice));
+        }
     }
 
     @Test

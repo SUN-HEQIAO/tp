@@ -61,12 +61,20 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return normalizedFullName.equals(otherName.normalizedFullName);
+        return fullName.equals(otherName.fullName);
     }
 
     @Override
     public int hashCode() {
-        return normalizedFullName.hashCode();
+        return fullName.hashCode();
+    }
+
+    /**
+     * Returns true if both names are logically the same (case-insensitive).
+     * Used for duplicate detection.
+     */
+    public boolean isSameLogicalName(Name other) {
+        return normalizedFullName.equals(other.normalizedFullName);
     }
 
 }

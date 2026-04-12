@@ -63,7 +63,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same Phone Number OR the same Email (case-insensitive).
+     * Returns true if both persons have the same identity fields.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -71,13 +71,10 @@ public class Person {
             return true;
         }
 
-        // No Person object passed in, so return false
-        if (otherPerson == null) {
-            return false;
-        }
-
-        return otherPerson.getPhone().toString().equals(getPhone().toString())
-                || otherPerson.getEmail().equals(getEmail());
+        return otherPerson != null
+                && otherPerson.getName().isSameLogicalName(getName())
+                && otherPerson.getPhone().equals(getPhone())
+                && otherPerson.getAddress().isSameLogicalAddress(getAddress());
     }
 
 
