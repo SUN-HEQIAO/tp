@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.MembershipId;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -22,13 +23,16 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final Integer nextMembershipId;
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("nextMembershipId") Integer nextMembershipId) {
         this.persons.addAll(persons);
+        this.nextMembershipId = nextMembershipId;
     }
 
     /**
@@ -38,6 +42,7 @@ class JsonSerializableAddressBook {
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        this.nextMembershipId = source instanceof AddressBook ? ((AddressBook) source).peekNextMembershipId() : null;
     }
 
     /**
@@ -47,13 +52,21 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        int maxExistingId = MembershipId.MIN_ID - 1;
+
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
             if (addressBook.hasPerson(person)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             addressBook.addPerson(person);
+            maxExistingId = Math.max(maxExistingId, person.getMembershipId().value);
         }
+
+        int fallbackNextId = maxExistingId + 1;
+        int resolvedNextId = nextMembershipId == null ? fallbackNextId : Math.max(nextMembershipId, fallbackNextId);
+        addressBook.setNextMembershipId(resolvedNextId);
+
         return addressBook;
     }
 
