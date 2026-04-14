@@ -11,8 +11,8 @@ import java.util.Locale;
  */
 public class Name {
 
-    private static final int MIN_LENGTH = 1;
-    private static final int MAX_LENGTH = 70;
+    public static final int MIN_LENGTH = 1;
+    public static final int MAX_LENGTH = 70;
 
     public static final String MESSAGE_CONSTRAINTS =
         "Only valid names that are " + MIN_LENGTH + " - " + MAX_LENGTH + " characters long, start with a letter, "
